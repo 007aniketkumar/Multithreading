@@ -18,50 +18,48 @@ int initialNumber =1;
 
 
     synchronized void evenNumbers()  {
-        System.out.println("even working");
-        while(initialNumber%2==0){
-           System.out.println("even:"+ initialNumber) ;
-           initialNumber++;
-            System.out.println("initialNumber in even block:"+ initialNumber);
+        while(initialNumber<=10) {
+            if (initialNumber % 2 == 0) {
+                System.out.println("even:" + initialNumber);
+                initialNumber++;
 
-        }
+            } else {
 
-        //odd number encountered
-        //notify all the existing threads
-        System.out.println("waiting odd threads notified");
-        notify();
-        //wait this thread
-        try {
-            System.out.println("even waiting");
-            wait();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+            //odd number encountered
+            //notify all the existing threads
+            notify();
+            //wait this thread
+            try {
+                System.out.println("even waiting");
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        } }notify();}
+
+
+
+    synchronized void oddNumbers() {
+
+
+        while (initialNumber<=10) {
+            if (initialNumber % 2 != 0) {
+                System.out.println("odd :" + initialNumber);
+                initialNumber++;
+            } else {
+
+            //even number encountered
+
+            notify();
+            try {
+                System.out.println("odd waiting");
+
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        } }
     }
-
-
-
-    synchronized void oddNumbers(){
-        System.out.println("");
-        while(initialNumber%2!=0){
-            System.out.println("odd :"+initialNumber) ;
-            initialNumber++;
-            System.out.println("initialNumber in odd block:"+ initialNumber);
-        }
-
-        //even number encountered
-        System.out.println("waiting even threads notified");
-
-        notify();
-        try {
-            System.out.println("odd waiting");
-
-            wait();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
 
     public static void main(String[] args){
         OddEven obj = new OddEven();
